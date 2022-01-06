@@ -3,13 +3,13 @@ apply plugin: 'com.github.dcendents.android-maven'    // 添加本行
 group='com.github.zhengzaihong'    // 添加本行
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
 
 
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -37,27 +37,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-//// 指定编码
-//tasks.withType(JavaCompile) {
-//    options.encoding = "UTF-8"
-//}
-//// 打包源码
-//task sourcesJar(type: Jar) {
-//    from android.sourceSets.main.java.srcDirs
-//    classifier = 'sources'
-//}
-//task javadoc(type: Javadoc) {
-//    failOnError false
-//    source = android.sourceSets.main.java.sourceFiles
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//    classpath += configurations.compile
-//}
-//// 制作文档(Javadoc)
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
-//artifacts {
-//    archives sourcesJar
-//    archives javadocJar
-//}
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
