@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.github.dcendents.android-maven'    // 添加本行
+group='com.github.zhengzaihong'    // 添加本行
+
 android {
     compileSdkVersion 26
 
@@ -29,21 +31,33 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-//添加
-publish {
-    artifactId = 'thread-handler'
-    userOrg = 'zhengzaihong'
-    groupId = 'com.zzh'
-    uploadName = "uihandle"
-    publishVersion = '1.0.0'
-    desc = 'An asynchronous framework for a brief introduction to thread processing'
-    website = 'https://github.com/zhengzaihong/ThreadUtil.git'
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    testImplementation 'junit:junit:4.12'
 }
 
-tasks.withType(Javadoc) {
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        links "http://docs.oracle.com/javase/7/docs/api"
-    }
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
