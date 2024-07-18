@@ -12,8 +12,8 @@ implementation 'com.github.zhengzaihong:Run:xx.xx.xx' 如下版本号
   
   //2.开启UI线程 同步， 子线程中也可更新ui
   
-  Run.onUiSync()
+  Run.onUiSync( ...do something)
   
   //3.开启UI线程 异步， 子线程中也可更新ui
   
-  Run.onUiAsync()
+  Run.onUiAsync( ...do something )
